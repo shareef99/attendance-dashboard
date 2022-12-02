@@ -3,12 +3,17 @@ import {
   createBrowserRouter,
   Navigate,
 } from "react-router-dom";
+import Signup from "./pages/Auth/Signup";
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <>Home</>,
+      element: (
+        <div className="flex h-full items-center justify-center text-3xl font-medium tracking-wide">
+          ADMIN DASHBOARD UNDER MAINTENANCE
+        </div>
+      ),
       children: [
         {
           path: "",
@@ -33,7 +38,7 @@ function App() {
         },
         {
           path: "signup",
-          element: <>Sign Up</>,
+          element: <Signup />,
         },
         {
           path: "*",
