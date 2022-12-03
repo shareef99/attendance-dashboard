@@ -3,6 +3,7 @@ import {
   createBrowserRouter,
   Navigate,
 } from "react-router-dom";
+import Signin from "./pages/Auth/Signin";
 import Signup from "./pages/Auth/Signup";
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
       children: [
         {
           path: "signin",
-          element: <>Sign In</>,
+          element: <Signin />,
         },
         {
           path: "signup",

@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .btn {
+    @apply bg-p-bright-green hover:bg-p-green text-p-white-green transition-all duration-300 ease-in;
+  }
+
+  .btn-outline {
+    @apply border-p-bright-green hover:bg-p-green hover:text-p-white-green text-black font-medium transition-all duration-300 ease-in;
+  }
+}

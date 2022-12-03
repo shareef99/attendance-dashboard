@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  background-color: inherit;
+  list-style: none;
+  text-decoration: none;
+  /* Roboto will apply to every thing until changed */
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Fixed the border issue with input elements and right icon */
+.rightIcon {
+  height: 90%;
+  right: 5px;
+  top: 5%;
+  background-color: transparent;
+}
+
+/* Fixed the border issue with input elements and right left icon */
+.leftIcon {
+  height: 90%;
+  left: 5px;
+  top: 5%;
+}

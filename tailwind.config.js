@@ -8,9 +8,13 @@ module.exports = {
           green: "#7ED967",
           blue: "#2744A1",
           "white-green": "#E6E8E5",
+          "bright-green": "#37C213",
         },
       },
     },
   },
   plugins: [],
+  corePlugins: {
+    preflight: false,
+  },
 };

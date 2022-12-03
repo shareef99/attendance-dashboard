@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import CustomMantineProvider from "./components/CustomMantineProvider";
 import "./styles/main.css";
 
 const root = ReactDOM.createRoot(
@@ -9,6 +10,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App />
+    <CustomMantineProvider>
+      <App />
+    </CustomMantineProvider>
   </React.StrictMode>
 );
