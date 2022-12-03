@@ -1,9 +1,9 @@
-import { Select as MSelect } from "@mantine/core";
-import type { SelectProps } from "@mantine/core";
+import { TextInput as MTextInput } from "@mantine/core";
+import type { TextInputProps } from "@mantine/core";
 
-export default function Select(props: SelectProps) {
+export default function TextInput(props: TextInputProps) {
   return (
-    <MSelect
+    <MTextInput
       {...props}
       classNames={{
         ...props.classNames,
