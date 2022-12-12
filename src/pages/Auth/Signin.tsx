@@ -31,12 +31,14 @@ export default function Signin() {
   // Functions
   const submitHandler = async (data: signinType) => {
     try {
-      const res = await axios.post(
+      const res: any = await axios.post(
         "http://localhost:9000/api/v1/auth/signin",
         data
       );
-      dispatch(signin({ accessToken: res.data.token }));
-      setAuth({ isAuth: true, accessToken: res.data.token });
+      const accessToken = res.data.token;
+      const employee = res.data.employee;
+      dispatch(signin({ accessToken: accessToken, ...employee }));
+      setAuth({ isAuth: true, accessToken: res.data.token, employee });
       navigate("/");
     } catch (err) {
       console.log(err);

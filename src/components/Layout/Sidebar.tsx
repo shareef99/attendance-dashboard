@@ -3,15 +3,18 @@ import {
   ChevronRightIcon,
 } from "@heroicons/react/24/outline";
 import { Navbar, NavLink, ScrollArea } from "@mantine/core";
+import { useDispatch } from "react-redux";
 import {
   NavLink as RRDNavLink,
   // useLocation,
   useNavigate,
 } from "react-router-dom";
 import { clearAuth } from "../../helpers/auth";
+import { signout } from "../../store/employeeSlice";
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   // const { pathname } = useLocation();
 
   return (
@@ -72,6 +75,7 @@ export default function Sidebar() {
             }}
             onClick={() => {
               clearAuth();
+              dispatch(signout());
               navigate("/auth/signin");
             }}
             icon={<ArrowLeftOnRectangleIcon className="h-5 w-5" />}
