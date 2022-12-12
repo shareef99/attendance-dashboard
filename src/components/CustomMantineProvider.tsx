@@ -13,7 +13,7 @@ export default function CustomMantineProvider({ children }: Props) {
         loader: "bars",
         transitionTimingFunction: "ease-in",
         colors: {
-          p: ["#7ED967", "#2744A1", "#E6E8E5"],
+          p: ["#2a4d69", "#4c86b4", "#adcbe3", "#e7eef6"],
           blue: [
             "#eff6ff",
             "#dbeafe",

@@ -1,16 +1,62 @@
 import TextInput from "../../components/Molecules/TextInput";
-import { PasswordInput, Button, Divider } from "@mantine/core";
+import { PasswordInput, Button } from "@mantine/core";
+import { useForm, zodResolver } from "@mantine/form";
 import { useNavigate } from "react-router-dom";
+import { z } from "zod";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { signin } from "../../store/employeeSlice";
+import { setAuth } from "../../helpers/auth";
+
+const signinSchema = z.object({
+  emp_id: z.string(),
+  password: z.string(),
+});
+
+type signinType = z.infer<typeof signinSchema>;
 
 export default function Signin() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // Form
+  const { getInputProps, onSubmit } = useForm<signinType>({
+    initialValues: {
+      emp_id: "",
+      password: "",
+    },
+    validate: zodResolver(signinSchema),
+  });
+
+  // Functions
+  const submitHandler = async (data: signinType) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:9000/api/v1/auth/signin",
+        data
+      );
+      dispatch(signin({ accessToken: res.data.token }));
+      setAuth({ isAuth: true, accessToken: res.data.token });
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
-    <section className="bg-p-green w-screen h-screen flex justify-center items-center">
+    <section className="bg-p-white-green w-screen h-screen flex justify-center items-center">
       <div className="shadow-2xl bg-p-white-green p-8 rounded">
         <h2 className="text-xl text-center font-medium">Sign In</h2>
-        <form className="space-y-2 sm:w-96 w-72 py-2">
-          <TextInput label="Faculty ID" placeholder="Enter ID" withAsterisk />
+        <form
+          className="space-y-2 sm:w-96 w-72 py-2"
+          onSubmit={onSubmit((data) => submitHandler(data))}
+        >
+          <TextInput
+            label="Employee ID"
+            placeholder="Enter ID"
+            withAsterisk
+            {...getInputProps("emp_id")}
+          />
           <PasswordInput
             label="Password"
             placeholder="Enter password"
@@ -19,18 +65,10 @@ export default function Signin() {
               rightSection: `rightIcon`,
               input: `bg-p-white-green`,
             }}
+            {...getInputProps("password")}
           />
-          <Button className="btn !mt-4 !font-medium" fullWidth>
+          <Button className="btn !mt-4 !font-medium" fullWidth type="submit">
             Sign In
-          </Button>
-          <Divider label="OR" labelPosition="center" variant="dashed" mt="md" />
-          <Button
-            className="btn-outline !mt-3"
-            fullWidth
-            variant="outline"
-            onClick={() => navigate("/auth/signup")}
-          >
-            Sign Up
           </Button>
         </form>
       </div>

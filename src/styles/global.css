@@ -13,11 +13,14 @@
   font-size: 16px;
   outline: none;
   border: none;
-  overflow-x: hidden;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
 }
 
 /* Fixed the border issue with input elements and right icon */

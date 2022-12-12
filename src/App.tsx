@@ -1,59 +1,19 @@
-import {
-  RouterProvider,
-  createBrowserRouter,
-  Navigate,
-} from "react-router-dom";
-import Signin from "./pages/Auth/Signin";
-import Signup from "./pages/Auth/Signup";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { checkAuth, getAuth } from "./helpers/auth";
+import Router from "./Router";
+import { signin } from "./store/employeeSlice";
 
 function App() {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: (
-        <div className="flex h-full items-center justify-center text-3xl font-medium tracking-wide">
-          ADMIN DASHBOARD UNDER MAINTENANCE
-        </div>
-      ),
-      children: [
-        {
-          path: "",
-          element: <Navigate to="/home" />,
-        },
-        {
-          path: "home",
-          element: (
-            <div className="flex h-full items-center justify-center text-3xl font-medium tracking-wide text-p-blue-dark">
-              ADMIN DASHBOARD UNDER MAINTENANCE
-            </div>
-          ),
-        },
-      ],
-    },
-    {
-      path: "/auth",
-      children: [
-        {
-          path: "signin",
-          element: <Signin />,
-        },
-        {
-          path: "signup",
-          element: <Signup />,
-        },
-        {
-          path: "*",
-          element: <Navigate to="/auth/signin" />,
-        },
-        {
-          path: "",
-          element: <Navigate to="/auth/signin" />,
-        },
-      ],
-    },
-  ]);
+  const dispatch = useDispatch();
 
-  return <RouterProvider router={router} />;
+  useEffect(() => {
+    if (checkAuth()) {
+      dispatch(signin(getAuth()));
+    }
+  }, [dispatch]);
+
+  return <Router />;
 }
 
 export default App;

@@ -8,7 +8,7 @@ export default function Select(props: SelectProps) {
       classNames={{
         ...props.classNames,
         rightSection: `rightIcon ${props.classNames?.rightSection}`,
-        input: `bg-p-white-green ${props.classNames?.input}`,
+        input: `${props.classNames?.input}`,
       }}
     />
   );

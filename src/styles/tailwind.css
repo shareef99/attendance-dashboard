@@ -4,10 +4,10 @@
 
 @layer components {
   .btn {
-    @apply bg-p-bright-green hover:bg-p-green text-p-white-green transition-all duration-300 ease-in;
+    @apply bg-p-blue text-p-gray transition-all duration-300 ease-in hover:bg-p-blue-dark;
   }
 
   .btn-outline {
-    @apply border-p-bright-green hover:bg-p-green hover:text-p-white-green text-black font-medium transition-all duration-300 ease-in;
+    @apply border-p-blue font-medium text-p-blue-dark transition-all duration-300 ease-in hover:bg-p-blue hover:text-p-gray;
   }
 }

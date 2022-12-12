@@ -5,10 +5,10 @@ module.exports = {
     extend: {
       colors: {
         p: {
-          green: "#7ED967",
-          blue: "#2744A1",
-          "white-green": "#E6E8E5",
-          "bright-green": "#37C213",
+          "blue-dark": "#2a4d69",
+          blue: "#4c86b4",
+          "blue-light": "#adcbe3",
+          gray: "#e7eef6",
         },
       },
     },

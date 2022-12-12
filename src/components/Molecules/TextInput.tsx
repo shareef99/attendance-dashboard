@@ -8,7 +8,7 @@ export default function TextInput(props: TextInputProps) {
       classNames={{
         ...props.classNames,
         rightSection: `rightIcon ${props.classNames?.rightSection}`,
-        input: `bg-p-white-green ${props.classNames?.input}`,
+        input: `${props.classNames?.input}`,
       }}
     />
   );

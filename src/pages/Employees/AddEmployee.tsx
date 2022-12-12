@@ -1,41 +1,35 @@
-import { TextInput, Button, NumberInput, Divider } from "@mantine/core";
+import { TextInput, Button, NumberInput } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
-import { useForm, yupResolver } from "@mantine/form";
+import { useForm, zodResolver } from "@mantine/form";
 import Select from "../../components/Molecules/Select";
-import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { z } from "zod";
+// import { useLoadingNotification } from "../../hooks/notification";
+import { addEmployeeApi } from "../../api/employees";
+import { useQueryClient } from "@tanstack/react-query";
 
-type SignupType = {
-  name: string;
-  id: string;
-  email: string;
-  type: "teaching" | "non-teaching" | string;
-  designation: string;
-  phone: number | null;
-  joiningDate: string;
-  department: string;
-};
-
-const SignupSchema = Yup.object().shape({
-  name: Yup.string().required("Required"),
-  id: Yup.string().required("Required"),
-  email: Yup.string().email("Invalid Email").required("Required"),
-  type: Yup.string().typeError("Required").required("Required"),
-  designation: Yup.string().typeError("Required").required("Required"),
-  phone: Yup.number()
-    .typeError("Required")
-    .required("Required")
-    .test(
-      "len",
-      "Phone number must be of 10 digits",
-      (val) => val?.toString().length === 10
+const AddEmployeeSchema = z.object({
+  name: z.string(),
+  id: z.string(),
+  email: z.string().email("Invalid Email"),
+  type: z.string(),
+  designation: z.string(),
+  phone: z
+    .number()
+    .positive()
+    .refine(
+      (val) => val.toString().length === 10,
+      "Number must be of 10 digits"
     ),
-  joiningDate: Yup.string().typeError("Required").required("Required"),
-  department: Yup.string().typeError("Required").required("Required"),
+  joiningDate: z.date(),
+  department: z.string(),
 });
 
-export default function Signup() {
+type AddEmployeeType = z.infer<typeof AddEmployeeSchema>;
+
+export default function AddEmployee() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const designation = {
     teaching: [
@@ -57,52 +51,63 @@ export default function Signup() {
     ],
   };
 
-  const { getInputProps, onSubmit, values } = useForm<SignupType>({
-    initialValues: {
-      name: "",
-      id: "",
-      email: "",
-      type: "",
-      designation: "",
-      phone: null,
-      joiningDate: "",
-      department: "",
-    },
+  // Form
+  const { getInputProps, onSubmit, values } = useForm<AddEmployeeType>({
     validateInputOnBlur: true,
-    validate: yupResolver(SignupSchema),
+    validate: zodResolver(AddEmployeeSchema),
   });
 
+  // Functions
+  const submitHandler = async (data: AddEmployeeType) => {
+    const body = {
+      name: data.name,
+      emp_id: data.id,
+      email: data.email,
+      mobile_no: data.phone,
+      joining_date: data.joiningDate,
+      department: data.department,
+      emp_type: data.type,
+      designation: data.designation,
+      role: 2,
+    };
+
+    try {
+      // useLoadingNotification({
+      //   id: "employee",
+      //   title: "Employee",
+      //   message: "Adding employee",
+      // });
+      console.log("Adding employee...");
+      await addEmployeeApi(body);
+      await queryClient.invalidateQueries(["employees"]);
+      navigate("/employees");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <section className="bg-p-green w-screen h-screen flex justify-center items-center">
-      <div className="shadow-2xl bg-p-white-green p-8 rounded">
-        <h2 className="text-xl text-center mb-4 font-medium">Sign Up</h2>
-        <form onSubmit={onSubmit((data) => console.log(data))}>
+    <section className="h-screen flex justify-center items-center">
+      <div className="shadow-2xl bg-p-white p-8 rounded">
+        <h2 className="text-xl text-center mb-4 font-medium">Add Employee</h2>
+        <form onSubmit={onSubmit((data) => submitHandler(data))}>
           <div className="grid grid-cols-2 gap-4">
             <TextInput
               label="Name"
               placeholder="Enter name"
               withAsterisk
-              classNames={{
-                input: "bg-p-white-green",
-              }}
               {...getInputProps("name")}
             />
             <TextInput
               label="ID"
               placeholder="Enter Unique ID"
               withAsterisk
-              classNames={{
-                input: "bg-p-white-green",
-              }}
               {...getInputProps("id")}
             />
             <TextInput
               label="Email"
               placeholder="faculty@islen.com"
               withAsterisk
-              classNames={{
-                input: "bg-p-white-green",
-              }}
               {...getInputProps("email")}
             />
             <NumberInput
@@ -110,14 +115,12 @@ export default function Signup() {
               placeholder="945xxxxxxx"
               hideControls
               withAsterisk
-              classNames={{ input: "bg-p-white-green" }}
               {...getInputProps("phone")}
             />
             <DatePicker
               label="Joining Date"
               placeholder="Select Joining Date"
               classNames={{
-                input: "bg-p-white-green",
                 rightSection: "rightIcon",
               }}
               withAsterisk
@@ -126,8 +129,6 @@ export default function Signup() {
             <Select
               data={[
                 { value: "cse", label: "CSE" },
-                { value: "cse-ai&ds", label: "CSE-AI&DS" },
-                { value: "cse-ai&ml", label: "CSE-AI&ML" },
                 { value: "it", label: "IT" },
                 { value: "civil", label: "CIVIL" },
                 { value: "mech", label: "Mech" },
@@ -152,8 +153,14 @@ export default function Signup() {
             <Select
               data={
                 values.type === "non-teaching"
-                  ? designation.nonTeaching.map((x) => ({ value: x, label: x }))
-                  : designation.teaching.map((x) => ({ value: x, label: x }))
+                  ? designation.nonTeaching.map((x) => ({
+                      value: x.toLowerCase(),
+                      label: x,
+                    }))
+                  : designation.teaching.map((x) => ({
+                      value: x.toLowerCase(),
+                      label: x,
+                    }))
               }
               label="Designation"
               withAsterisk
@@ -162,16 +169,7 @@ export default function Signup() {
             />
           </div>
           <Button className="btn !mt-4" fullWidth type="submit">
-            Sign Up
-          </Button>
-          <Divider label="OR" labelPosition="center" variant="dashed" mt="md" />
-          <Button
-            className="btn-outline !mt-4"
-            fullWidth
-            variant="outline"
-            onClick={() => navigate("/auth/signin")}
-          >
-            Sign In
+            Add Employee
           </Button>
         </form>
       </div>
