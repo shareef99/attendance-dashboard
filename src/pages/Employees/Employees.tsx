@@ -5,6 +5,19 @@ import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { getEmployeesApi } from "../../api/employees";
 import Loader from "../../components/Molecules/Loader";
+import { errNotification } from "../../helpers/notification";
+
+type employeeType = {
+  _id: string;
+  empId: string;
+  department: string;
+  designation: string;
+  name: string;
+  email: string;
+  mobileNo: number;
+  joiningDate: string;
+  type: string;
+};
 
 export default function Employees() {
   const {
@@ -12,7 +25,7 @@ export default function Employees() {
     isError,
     error,
     data: employees,
-  } = useQuery({
+  } = useQuery<Array<employeeType>, any>({
     queryKey: ["employees"],
     queryFn: getEmployeesApi,
   });
@@ -22,7 +35,17 @@ export default function Employees() {
   }
 
   if (isError) {
-    console.log(error);
+    errNotification(
+      {
+        id: "employee",
+        title: "Employees",
+        message:
+          error?.response?.data.message ||
+          error.message ||
+          "Failed to load employees",
+      },
+      false
+    );
   }
 
   return (
@@ -33,40 +56,44 @@ export default function Employees() {
           <Link to="/employees/add">Add Employee</Link>
         </Button>
       </div>
-      <ScrollArea>
-        <Table className="my-4" striped withBorder withColumnBorders>
-          <thead>
-            <tr>
-              <th>Employee ID</th>
-              <th>Department</th>
-              <th>Designation</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Mobile No</th>
-              <th>Joining Date</th>
-              <th>Employee Type</th>
-              <th>View</th>
-            </tr>
-          </thead>
-          <tbody>
-            {employees?.map((x: any) => (
-              <tr key={x._id}>
-                <td>{x.emp_id}</td>
-                <td>{x.department}</td>
-                <td>{x.designation}</td>
-                <td>{x.name}</td>
-                <td>{x.email}</td>
-                <td>{x.mobile_no}</td>
-                <td>{dayjs(x.joining_date).format("DD-MM-YYYY")}</td>
-                <td>{x.emp_type}</td>
-                <td className="cursor-pointer">
-                  <EyeIcon className="w-6 h-6" />
-                </td>
+      {employees ? (
+        <ScrollArea>
+          <Table className="my-4" striped withBorder withColumnBorders>
+            <thead>
+              <tr>
+                <th>Employee ID</th>
+                <th>Department</th>
+                <th>Designation</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile No</th>
+                <th>Joining Date</th>
+                <th>Employee Type</th>
+                <th>View</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
-      </ScrollArea>
+            </thead>
+            <tbody>
+              {employees.map((x: any) => (
+                <tr key={x._id}>
+                  <td>{x.empId}</td>
+                  <td>{x.department}</td>
+                  <td>{x.designation}</td>
+                  <td>{x.name}</td>
+                  <td>{x.email}</td>
+                  <td>{x.mobileNo}</td>
+                  <td>{dayjs(x.joiningDate).format("DD-MM-YYYY")}</td>
+                  <td>{x.type}</td>
+                  <td className="cursor-pointer">
+                    <EyeIcon className="w-6 h-6" />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </ScrollArea>
+      ) : (
+        <></>
+      )}
     </section>
   );
 }

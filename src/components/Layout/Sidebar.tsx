@@ -4,23 +4,18 @@ import {
   CalendarDaysIcon,
   ChevronRightIcon,
   IdentificationIcon,
-  UserGroupIcon,
+  UserCircleIcon,
   UserMinusIcon,
 } from "@heroicons/react/24/outline";
 import { Navbar, NavLink, ScrollArea } from "@mantine/core";
 import { useDispatch } from "react-redux";
-import {
-  NavLink as RRDNavLink,
-  // useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { NavLink as RRDNavLink, useNavigate } from "react-router-dom";
 import { clearAuth } from "../../helpers/auth";
 import { signout } from "../../store/employeeSlice";
 
 export default function Sidebar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const { pathname } = useLocation();
 
   return (
     <Navbar
@@ -30,6 +25,21 @@ export default function Sidebar() {
     >
       <ScrollArea className="h-full bg-p-blue-light">
         <Navbar.Section grow className="bg-p-blue-light px-4 py-8">
+          <RRDNavLink to="/profile">
+            {({ isActive }) => (
+              <NavLink
+                label="Profile"
+                className={`text-p-blue-dark hover:bg-p-gray hover:text-p-blue ${
+                  isActive && "bg-p-green text-black"
+                }`}
+                classNames={{
+                  label: "text-lg font-medium",
+                }}
+                icon={<UserCircleIcon className="w-5 h-5" />}
+                rightSection={<ChevronRightIcon className="h-4 w-4" />}
+              />
+            )}
+          </RRDNavLink>
           <RRDNavLink to="/employees">
             {({ isActive }) => (
               <NavLink
@@ -42,7 +52,7 @@ export default function Sidebar() {
                 }}
                 icon={<IdentificationIcon className="w-5 h-5" />}
                 rightSection={<ChevronRightIcon className="h-4 w-4" />}
-              ></NavLink>
+              />
             )}
           </RRDNavLink>
           <RRDNavLink to="/leaves">

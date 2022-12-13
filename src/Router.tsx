@@ -11,7 +11,7 @@ import AddEmployee from "./pages/Employees/AddEmployee";
 import Employees from "./pages/Employees/Employees";
 import AddLeave from "./pages/Leaves/AddLeave";
 import Leaves from "./pages/Leaves/Leaves";
-import Profile from "./pages/Profile";
+import Profile from "./pages/Profile/Profile";
 
 export default function Router() {
   const routes = createBrowserRouter([
