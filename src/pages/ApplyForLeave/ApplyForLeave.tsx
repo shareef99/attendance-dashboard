@@ -45,7 +45,7 @@ export default function ApplyForLeave() {
         </thead>
         <tbody>
           {employee.leaves.map((leave: any) => (
-            <tr>
+            <tr key={leave._id}>
               <td>{leave.name}</td>
               <td>{leave.shortName}</td>
               <td>{dayjs(leave.from).format("DD-MM-YYYY")}</td>

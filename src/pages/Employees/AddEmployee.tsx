@@ -178,10 +178,12 @@ export default function AddEmployee() {
             <Select
               data={
                 designations
-                  ? designations.map((x: any) => ({
-                      value: x.name,
-                      label: x.name,
-                    }))
+                  ? designations
+                      .filter((x: any) => x.type === values.type)
+                      .map((x: any) => ({
+                        value: x.name,
+                        label: x.name,
+                      }))
                   : []
               }
               label="Designation"

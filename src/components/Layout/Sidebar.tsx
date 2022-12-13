@@ -1,6 +1,11 @@
 import {
   ArrowLeftOnRectangleIcon,
+  BellAlertIcon,
+  CalendarDaysIcon,
   ChevronRightIcon,
+  IdentificationIcon,
+  UserGroupIcon,
+  UserMinusIcon,
 } from "@heroicons/react/24/outline";
 import { Navbar, NavLink, ScrollArea } from "@mantine/core";
 import { useDispatch } from "react-redux";
@@ -35,6 +40,7 @@ export default function Sidebar() {
                 classNames={{
                   label: "text-lg font-medium",
                 }}
+                icon={<IdentificationIcon className="w-5 h-5" />}
                 rightSection={<ChevronRightIcon className="h-4 w-4" />}
               ></NavLink>
             )}
@@ -49,6 +55,7 @@ export default function Sidebar() {
                 classNames={{
                   label: "text-lg font-medium",
                 }}
+                icon={<CalendarDaysIcon className="w-5 h-5" />}
                 rightSection={<ChevronRightIcon className="h-4 w-4" />}
               />
             )}
@@ -63,6 +70,7 @@ export default function Sidebar() {
                 classNames={{
                   label: "text-lg font-medium",
                 }}
+                icon={<UserMinusIcon className="w-5 h-5" />}
                 rightSection={<ChevronRightIcon className="h-4 w-4" />}
               ></NavLink>
             )}
@@ -77,6 +85,7 @@ export default function Sidebar() {
                 classNames={{
                   label: "text-lg font-medium",
                 }}
+                icon={<BellAlertIcon className="w-5 h-5" />}
                 rightSection={<ChevronRightIcon className="h-4 w-4" />}
               ></NavLink>
             )}
