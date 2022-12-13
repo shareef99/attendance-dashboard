@@ -63,6 +63,10 @@ export default function Router() {
             },
           ],
         },
+        {
+          path: "notifications",
+          element: <>Notification</>,
+        },
       ],
     },
     {

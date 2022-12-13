@@ -67,6 +67,20 @@ export default function Sidebar() {
               ></NavLink>
             )}
           </RRDNavLink>
+          <RRDNavLink to="/notifications">
+            {({ isActive }) => (
+              <NavLink
+                label="Notifications"
+                className={`text-p-blue-dark hover:bg-p-gray hover:text-p-blue ${
+                  isActive && "bg-p-gray text-p-blue"
+                }`}
+                classNames={{
+                  label: "text-lg font-medium",
+                }}
+                rightSection={<ChevronRightIcon className="h-4 w-4" />}
+              ></NavLink>
+            )}
+          </RRDNavLink>
           <NavLink
             label="logout"
             className="text-red-500 hover:bg-p-gray"
