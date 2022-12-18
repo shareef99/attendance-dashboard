@@ -39,7 +39,7 @@ export default function ApplyLeave() {
     isError,
     error,
     data: leaves,
-  } = useQuery<Array<any>, any>({
+  } = useQuery<Array<leaveType>, any>({
     queryKey: ["apply-leaves"],
     queryFn: getLeavesAPi,
   });
@@ -57,13 +57,13 @@ export default function ApplyLeave() {
 
     try {
       const body = {
-        name: data.name,
-        shortName: leaves?.find((leave) => leave.name === data.name)?.shortName,
+        name: leaves?.find((leave) => leave._id === data.name)?.name,
+        shortname: leaves?.find((leave) => leave._id === data.name)?.shortname,
         from: data.from,
         to: data.to,
-        leaveDuration: data.duration,
+        leave_duration: data.duration,
       };
-      await applyForLeaveApi(body, "shareef1981");
+      await applyForLeaveApi(body);
       await queryClient.invalidateQueries(["employee"]);
       navigate("/apply-for-leave");
       successNotification({
@@ -94,7 +94,7 @@ export default function ApplyLeave() {
             data={
               leaves
                 ? leaves.map((leave) => ({
-                    value: leave.name,
+                    value: leave._id,
                     label: leave.name,
                   }))
                 : []
@@ -107,11 +107,13 @@ export default function ApplyLeave() {
             placeholder="Enter Date"
             className="rightIcon"
             {...getInputProps("from")}
+            minDate={new Date()}
           />
           <DatePicker
             label="To"
             placeholder="Enter Date"
             className="rightIcon"
+            minDate={new Date()}
             {...getInputProps("to")}
           />
           <Select
