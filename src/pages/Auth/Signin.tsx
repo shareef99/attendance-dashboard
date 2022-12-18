@@ -37,6 +37,8 @@ export default function Signin() {
       );
       const accessToken = res.data.token;
       const employee = res.data.employee;
+      console.log(employee);
+
       dispatch(signin({ accessToken: accessToken, ...employee }));
       setAuth({ isAuth: true, accessToken: res.data.token, employee });
       navigate("/");

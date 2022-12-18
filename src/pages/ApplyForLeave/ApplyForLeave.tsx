@@ -13,7 +13,8 @@ export default function ApplyForLeave() {
     error,
     data: employee,
   } = useQuery<any, any>({
-    queryFn: getEmployeeApi,
+    // TODO: Make it dynamic
+    queryFn: () => getEmployeeApi("shareef1981"),
     queryKey: ["employee"],
   });
 

@@ -5,10 +5,10 @@ const initialState = {
   accessToken: "",
   _id: "",
   name: "",
-  empId: "",
+  emp_id: "",
   email: "",
-  mobileNo: 0,
-  joiningDate: "",
+  mobile_no: 0,
+  joining_date: "",
   department: "",
   empType: "",
   designation: "",
@@ -19,10 +19,10 @@ export type loginPayloadType = {
   accessToken: string;
   _id: string;
   name: string;
-  empId: string;
+  emp_id: string;
   email: string;
-  mobileNo: number;
-  joiningDate: string;
+  mobile_no: number;
+  joining_date: string;
   department: string;
   empType: string;
   designation: string;
@@ -38,10 +38,10 @@ const userSlice = createSlice({
       state.accessToken = payload.accessToken;
       state._id = payload._id;
       state.name = payload.name;
-      state.empId = payload.empId;
+      state.emp_id = payload.emp_id;
       state.email = payload.email;
-      state.mobileNo = payload.mobileNo;
-      state.joiningDate = payload.joiningDate;
+      state.mobile_no = payload.mobile_no;
+      state.joining_date = payload.joining_date;
       state.department = payload.department;
       state.empType = payload.empType;
       state.designation = payload.designation;
@@ -52,10 +52,10 @@ const userSlice = createSlice({
       state.accessToken = "";
       state._id = "";
       state.name = "";
-      state.empId = "";
+      state.emp_id = "";
       state.email = "";
-      state.mobileNo = 0;
-      state.joiningDate = "";
+      state.mobile_no = 0;
+      state.joining_date = "";
       state.department = "";
       state.empType = "";
       state.designation = "";

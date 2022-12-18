@@ -5,9 +5,22 @@ export const getEmployeesApi = async () => {
   return res.data.employees;
 };
 
-export const getEmployeeApi = async () => {
-  const res = await axiosClient.get("/employees/639032f2698601ab7fe7a5de");
+export const getEmployeeApi = async (id: string) => {
+  const res = await axiosClient.get("/employees/byId", {
+    params: {
+      id: id,
+    },
+  });
   return res.data.employee;
+};
+
+export const getEmployeesByDepartmentApi = async (department: string) => {
+  const res = await axiosClient.get("/employees/byDepartment", {
+    params: {
+      department: department,
+    },
+  });
+  return res.data.employees;
 };
 
 export const addEmployeeApi = async (body: any) => {

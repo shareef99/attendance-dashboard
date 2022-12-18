@@ -2,32 +2,28 @@ import { EyeIcon } from "@heroicons/react/24/outline";
 import { Button, ScrollArea, Table } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { Link } from "react-router-dom";
-import { getEmployeesApi } from "../../api/employees";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  getEmployeesApi,
+  getEmployeesByDepartmentApi,
+} from "../../api/employees";
 import Loader from "../../components/Molecules/Loader";
 import { errNotification } from "../../helpers/notification";
-
-type employeeType = {
-  _id: string;
-  empId: string;
-  department: string;
-  designation: string;
-  name: string;
-  email: string;
-  mobileNo: number;
-  joiningDate: string;
-  type: string;
-};
+import { EmployeesType } from "./employee";
 
 export default function Employees() {
+  const navigate = useNavigate();
+  const user = useSelector(({ employee }: any) => employee);
+
   const {
     isLoading,
     isError,
     error,
     data: employees,
-  } = useQuery<Array<employeeType>, any>({
+  } = useQuery<Array<EmployeesType>, any>({
     queryKey: ["employees"],
-    queryFn: getEmployeesApi,
+    queryFn: () => getEmployeesByDepartmentApi(user.department),
   });
 
   if (isLoading) {
@@ -41,7 +37,7 @@ export default function Employees() {
         title: "Employees",
         message:
           error?.response?.data.message ||
-          error.message ||
+          error?.message ||
           "Failed to load employees",
       },
       false
@@ -73,17 +69,20 @@ export default function Employees() {
               </tr>
             </thead>
             <tbody>
-              {employees.map((x: any) => (
-                <tr key={x._id}>
-                  <td>{x.empId}</td>
-                  <td>{x.department}</td>
-                  <td>{x.designation}</td>
-                  <td>{x.name}</td>
-                  <td>{x.email}</td>
-                  <td>{x.mobileNo}</td>
-                  <td>{dayjs(x.joiningDate).format("DD-MM-YYYY")}</td>
-                  <td>{x.type}</td>
-                  <td className="cursor-pointer">
+              {employees.map((employee) => (
+                <tr key={employee._id}>
+                  <td>{employee.emp_id}</td>
+                  <td>{employee.department}</td>
+                  <td>{employee.designation}</td>
+                  <td>{employee.name}</td>
+                  <td>{employee.email}</td>
+                  <td>{employee.mobile_no}</td>
+                  <td>{dayjs(employee.joining_date).format("DD-MM-YYYY")}</td>
+                  <td>{employee.emp_type}</td>
+                  <td
+                    className="cursor-pointer"
+                    onClick={() => navigate(`/employees/${employee.emp_id}`)}
+                  >
                     <EyeIcon className="w-6 h-6" />
                   </td>
                 </tr>

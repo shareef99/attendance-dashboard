@@ -8,6 +8,7 @@ import ApplyForLeave from "./pages/ApplyForLeave/ApplyForLeave";
 import ApplyLeave from "./pages/ApplyForLeave/ApplyLeave";
 import Signin from "./pages/Auth/Signin";
 import AddEmployee from "./pages/Employees/AddEmployee";
+import EmployeeDetails from "./pages/Employees/EmployeeDetails";
 import Employees from "./pages/Employees/Employees";
 import AddLeave from "./pages/Leaves/AddLeave";
 import Leaves from "./pages/Leaves/Leaves";
@@ -37,6 +38,10 @@ export default function Router() {
             {
               path: "add",
               element: <AddEmployee />,
+            },
+            {
+              path: ":empId",
+              element: <EmployeeDetails />,
             },
           ],
         },
