@@ -7,11 +7,9 @@ import Loader from "../../components/Molecules/Loader";
 export type leaveType = {
   _id: string;
   name: string;
-  shortName: string;
+  shortname: string;
   limit: number;
-  leaveType: string;
-  eligibility: boolean;
-  uploadDocument: boolean;
+  leave_type: string;
 };
 
 export default function Leaves() {
@@ -50,19 +48,15 @@ export default function Leaves() {
                 <th>Short Name</th>
                 <th>Type</th>
                 <th>Limit</th>
-                <th>Eligibility</th>
-                <th>Require Document</th>
               </tr>
             </thead>
             <tbody>
               {leaves.map((leave) => (
                 <tr key={leave._id}>
                   <td>{leave.name}</td>
-                  <td>{leave.shortName}</td>
-                  <td>{leave.leaveType}</td>
+                  <td>{leave.shortname}</td>
+                  <td>{leave.leave_type}</td>
                   <td>{leave.limit}</td>
-                  <td>{leave.eligibility ? "Yes" : "No"}</td>
-                  <td>{leave.uploadDocument ? "Yes" : "No"}</td>
                 </tr>
               ))}
             </tbody>

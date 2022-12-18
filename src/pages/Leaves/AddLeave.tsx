@@ -15,11 +15,9 @@ import {
 
 const addLeaveSchema = z.object({
   name: z.string(),
-  shortName: z.string(),
-  leaveType: z.string(),
+  shortname: z.string(),
+  leave_type: z.string(),
   limit: z.number(),
-  eligibility: z.enum(["eligible", "non-eligible"]),
-  document: z.enum(["required", "not-required"]),
 });
 
 type addLeaveType = z.infer<typeof addLeaveSchema>;
@@ -41,15 +39,7 @@ export default function AddLeave() {
       message: "Adding leave...",
     });
     try {
-      const body = {
-        name: data.name,
-        shortName: data.shortName,
-        leaveType: data.leaveType,
-        limit: data.limit,
-        eligibility: data.eligibility === "eligible" ? true : false,
-        uploadDocument: data.document === "required" ? true : false,
-      };
-      await addLeaveApi(body);
+      await addLeaveApi(data);
       await queryClient.invalidateQueries(["leaves"]);
       successNotification({
         id: "leave",
@@ -57,11 +47,11 @@ export default function AddLeave() {
         message: "Leave added successfully",
       });
       navigate("/leaves");
-    } catch (err) {
+    } catch (err: any) {
       errNotification({
         id: "leave",
         title: "Leave",
-        message: "Failed to add leave",
+        message: err.message || "Failed to add leave",
       });
     }
   };
@@ -82,7 +72,7 @@ export default function AddLeave() {
           <TextInput
             label="Short Name"
             placeholder="Enter short name"
-            {...getInputProps("shortName")}
+            {...getInputProps("shortname")}
           />
           <Select
             label="Leave Type"
@@ -91,7 +81,7 @@ export default function AddLeave() {
               { value: "accumulated", label: "Accumulated" },
               { value: "public-holiday", label: "Public Holiday" },
             ]}
-            {...getInputProps("leaveType")}
+            {...getInputProps("leave_type")}
           />
           <NumberInput
             label="Leave limit"
@@ -99,25 +89,7 @@ export default function AddLeave() {
             min={1}
             {...getInputProps("limit")}
           />
-          <Select
-            label="Eligibility"
-            placeholder="Select eligibility"
-            data={[
-              { value: "eligible", label: "Eligible" },
-              { value: "non-eligible", label: "Not Eligible" },
-            ]}
-            {...getInputProps("eligibility")}
-          />
-          <Select
-            label="Document"
-            placeholder="Select document"
-            data={[
-              { value: "required", label: "Required" },
-              { value: "not-required", label: "Not Required" },
-            ]}
-            {...getInputProps("document")}
-          />
-          <Button fullWidth className="btn" type="submit">
+          <Button fullWidth className="btn !mt-4" type="submit">
             Add Leave
           </Button>
         </form>

@@ -39,7 +39,7 @@ export default function ApplyLeave() {
     isError,
     error,
     data: leaves,
-  } = useQuery<Array<leaveType>, any>({
+  } = useQuery<Array<any>, any>({
     queryKey: ["apply-leaves"],
     queryFn: getLeavesAPi,
   });
