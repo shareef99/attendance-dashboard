@@ -36,7 +36,7 @@ export type EmployeeDetailsType = {
 
 export type PersonalDetailsType = {
   _id: string;
-  gender: ["male", "female", "others"];
+  gender: "male" | "female" | "others";
   dob: string;
   married: boolean;
   marriedDate: string;
@@ -46,7 +46,7 @@ export type PersonalDetailsType = {
   IFSCCode: string;
   pancardNo: string;
   pfNo: string;
-  aadharNo: string;
+  aadharNo: number;
   RTGSNo: string;
 };
 

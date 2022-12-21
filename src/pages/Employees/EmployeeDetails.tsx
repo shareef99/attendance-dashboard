@@ -6,6 +6,7 @@ import Loader from "../../components/Molecules/Loader";
 import { errNotification } from "../../helpers/notification";
 import { EmployeeDetailsType } from "./employee";
 import Qualification from "./Qualification/Qualification";
+import PersonalDetails from "./PersonalDetails";
 
 export default function EmployeeDetails() {
   const params = useParams();
@@ -66,7 +67,34 @@ export default function EmployeeDetails() {
         <Loader fullscreen={true} />
       ) : (
         <>
-          <Tabs.Panel value="personal">Personal</Tabs.Panel>
+          <Tabs.Panel value="personal">
+            <PersonalDetails
+              personalDetails={{
+                emp_id: employee.emp_id,
+                department: employee.department,
+                aadharNo: employee.personalDetails.aadharNo,
+                address: employee.personalDetails.address,
+                bankAccountNo: employee.personalDetails.bankAccountNo,
+                bankName: employee.personalDetails.bankName,
+                designation: employee.designation,
+                dob: employee.personalDetails.dob,
+                joining_date: employee.joining_date,
+                email: employee.email,
+                gender: employee.personalDetails.gender,
+                IFSCCode: employee.personalDetails.IFSCCode,
+                married: employee.personalDetails.married
+                  ? "married"
+                  : "unmarried",
+                marriedDate: employee.personalDetails.marriedDate,
+                mobile_no: employee.mobile_no,
+                name: employee.name,
+                pancardNo: employee.personalDetails.pancardNo,
+                pfNo: employee.personalDetails.pfNo,
+                RTGSNo: employee.personalDetails.RTGSNo,
+                emp_type: employee.emp_type,
+              }}
+            />
+          </Tabs.Panel>
           <Tabs.Panel value="qualification">
             <Qualification
               qualification={employee.qualificationDetails}

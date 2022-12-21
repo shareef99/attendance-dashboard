@@ -31,3 +31,7 @@ export const getEmployeesWithLeavesApi = async () => {
   const res = await axiosClient.get("/employees/withLeaves");
   return res.data.employees;
 };
+
+export const updatePersonalDetailsApi = async (body: any) => {
+  return await axiosClient.put("/employees/personalDetails", body);
+};
