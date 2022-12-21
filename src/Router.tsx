@@ -25,6 +25,10 @@ export default function Router() {
           element: <Navigate to="/apply-for-leave" />,
         },
         {
+          path: "*",
+          element: <Navigate to="/apply-for-leave" />,
+        },
+        {
           path: "employees",
           children: [
             {
@@ -65,12 +69,16 @@ export default function Router() {
           ],
         },
         {
+          path: "employee-leaves",
+          element: <EmployeeLeaves />,
+        },
+        {
           path: "notifications",
           element: <>Notification</>,
         },
         {
-          path: "employee-leaves",
-          element: <EmployeeLeaves />,
+          path: "profile",
+          element: <EmployeeDetails />,
         },
       ],
     },

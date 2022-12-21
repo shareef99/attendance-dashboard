@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { Tabs } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
-import { getEmployeeApi } from "../../api/employees";
+import { getCurrentEmployeeApi, getEmployeeApi } from "../../api/employees";
 import Loader from "../../components/Molecules/Loader";
 import { errNotification } from "../../helpers/notification";
 import { EmployeeDetailsType } from "./employee";
@@ -18,7 +18,7 @@ export default function EmployeeDetails() {
     error,
     data: employee,
   } = useQuery<EmployeeDetailsType, any>({
-    queryFn: () => getEmployeeApi(id!),
+    queryFn: () => (id ? getEmployeeApi(id) : getCurrentEmployeeApi()),
     queryKey: [`employee-${id}`],
   });
 

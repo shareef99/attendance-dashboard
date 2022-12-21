@@ -26,17 +26,17 @@ export default function Sidebar() {
     >
       <ScrollArea className="h-full bg-p-blue-light">
         <Navbar.Section grow className="bg-p-blue-light px-4 py-8">
-          <RRDNavLink to="/profile">
+          <RRDNavLink to="/apply-for-leave">
             {({ isActive }) => (
               <NavLink
-                label="Profile"
+                label="Apply Leave"
                 className={`text-p-blue-dark hover:bg-p-gray hover:text-p-blue ${
-                  isActive && "bg-p-green text-black"
+                  isActive && "bg-p-gray text-p-blue"
                 }`}
                 classNames={{
                   label: "text-lg font-medium",
                 }}
-                icon={<UserCircleIcon className="w-5 h-5" />}
+                icon={<UserMinusIcon className="w-5 h-5" />}
                 rightSection={<ChevronRightIcon className="h-4 w-4" />}
               />
             )}
@@ -71,21 +71,6 @@ export default function Sidebar() {
               />
             )}
           </RRDNavLink>
-          <RRDNavLink to="/apply-for-leave">
-            {({ isActive }) => (
-              <NavLink
-                label="Apply Leave"
-                className={`text-p-blue-dark hover:bg-p-gray hover:text-p-blue ${
-                  isActive && "bg-p-gray text-p-blue"
-                }`}
-                classNames={{
-                  label: "text-lg font-medium",
-                }}
-                icon={<UserMinusIcon className="w-5 h-5" />}
-                rightSection={<ChevronRightIcon className="h-4 w-4" />}
-              ></NavLink>
-            )}
-          </RRDNavLink>
           <RRDNavLink to="/leaves">
             {({ isActive }) => (
               <NavLink
@@ -112,6 +97,21 @@ export default function Sidebar() {
                   label: "text-lg font-medium",
                 }}
                 icon={<BellAlertIcon className="w-5 h-5" />}
+                rightSection={<ChevronRightIcon className="h-4 w-4" />}
+              />
+            )}
+          </RRDNavLink>
+          <RRDNavLink to="/profile">
+            {({ isActive }) => (
+              <NavLink
+                label="Profile"
+                className={`text-p-blue-dark hover:bg-p-gray hover:text-p-blue ${
+                  isActive && "bg-p-green text-black"
+                }`}
+                classNames={{
+                  label: "text-lg font-medium",
+                }}
+                icon={<UserCircleIcon className="w-5 h-5" />}
                 rightSection={<ChevronRightIcon className="h-4 w-4" />}
               />
             )}
