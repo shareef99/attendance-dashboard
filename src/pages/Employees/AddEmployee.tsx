@@ -64,7 +64,9 @@ export default function AddEmployee() {
       department: data.department,
       emp_type: data.type,
       designation: data.designation,
-      role: 2,
+      role: designations.find(
+        (designation: any) => designation.name === data.designation
+      ).role,
     };
 
     try {

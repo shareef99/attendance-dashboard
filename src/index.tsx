@@ -18,9 +18,10 @@ setUpInterceptors();
 
 const queryClient = new QueryClient({
   defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-    },
+    // TODO: Uncomment this is production
+    // queries: {
+    //   refetchOnWindowFocus: false,
+    // },
   },
 });
 

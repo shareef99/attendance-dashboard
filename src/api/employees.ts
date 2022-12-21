@@ -24,5 +24,10 @@ export const getEmployeesByDepartmentApi = async (department: string) => {
 };
 
 export const addEmployeeApi = async (body: any) => {
-  await axiosClient.post("/employees", body);
+  return await axiosClient.post("/employees", body);
+};
+
+export const getEmployeesWithLeavesApi = async () => {
+  const res = await axiosClient.get("/employees/withLeaves");
+  return res.data.employees;
 };

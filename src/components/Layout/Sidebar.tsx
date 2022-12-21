@@ -5,6 +5,7 @@ import {
   ChevronRightIcon,
   IdentificationIcon,
   UserCircleIcon,
+  UserGroupIcon,
   UserMinusIcon,
 } from "@heroicons/react/24/outline";
 import { Navbar, NavLink, ScrollArea } from "@mantine/core";
@@ -55,17 +56,17 @@ export default function Sidebar() {
               />
             )}
           </RRDNavLink>
-          <RRDNavLink to="/leaves">
+          <RRDNavLink to="/employee-leaves">
             {({ isActive }) => (
               <NavLink
-                label="Leaves"
-                className={`text-p-blue-dark hover:bg-p-gray hover:text-p-blue ${
+                label="Employee Leaves"
+                className={`text-p-blue-dark  hover:bg-p-gray hover:text-p-blue ${
                   isActive && "bg-p-gray text-p-blue"
                 }`}
                 classNames={{
                   label: "text-lg font-medium",
                 }}
-                icon={<CalendarDaysIcon className="w-5 h-5" />}
+                icon={<UserGroupIcon className="w-5 h-5" />}
                 rightSection={<ChevronRightIcon className="h-4 w-4" />}
               />
             )}
@@ -85,6 +86,21 @@ export default function Sidebar() {
               ></NavLink>
             )}
           </RRDNavLink>
+          <RRDNavLink to="/leaves">
+            {({ isActive }) => (
+              <NavLink
+                label="Leaves Types"
+                className={`text-p-blue-dark hover:bg-p-gray hover:text-p-blue ${
+                  isActive && "bg-p-gray text-p-blue"
+                }`}
+                classNames={{
+                  label: "text-lg font-medium",
+                }}
+                icon={<CalendarDaysIcon className="w-5 h-5" />}
+                rightSection={<ChevronRightIcon className="h-4 w-4" />}
+              />
+            )}
+          </RRDNavLink>
           <RRDNavLink to="/notifications">
             {({ isActive }) => (
               <NavLink
@@ -97,7 +113,7 @@ export default function Sidebar() {
                 }}
                 icon={<BellAlertIcon className="w-5 h-5" />}
                 rightSection={<ChevronRightIcon className="h-4 w-4" />}
-              ></NavLink>
+              />
             )}
           </RRDNavLink>
           <NavLink

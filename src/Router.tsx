@@ -7,6 +7,7 @@ import Layout from "./components/Layout/Layout";
 import ApplyForLeave from "./pages/ApplyForLeave/ApplyForLeave";
 import ApplyLeave from "./pages/ApplyForLeave/ApplyLeave";
 import Signin from "./pages/Auth/Signin";
+import EmployeeLeaves from "./pages/EmployeeLeaves/EmployeeLeaves";
 import AddEmployee from "./pages/Employees/AddEmployee";
 import EmployeeDetails from "./pages/Employees/EmployeeDetails";
 import Employees from "./pages/Employees/Employees";
@@ -71,6 +72,10 @@ export default function Router() {
         {
           path: "notifications",
           element: <>Notification</>,
+        },
+        {
+          path: "employee-leaves",
+          element: <EmployeeLeaves />,
         },
       ],
     },
