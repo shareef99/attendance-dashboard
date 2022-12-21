@@ -13,7 +13,6 @@ import EmployeeDetails from "./pages/Employees/EmployeeDetails";
 import Employees from "./pages/Employees/Employees";
 import AddLeave from "./pages/Leaves/AddLeave";
 import Leaves from "./pages/Leaves/Leaves";
-import Profile from "./pages/Profile/Profile";
 
 export default function Router() {
   const routes = createBrowserRouter([
@@ -23,11 +22,7 @@ export default function Router() {
       children: [
         {
           path: "",
-          element: <Navigate to="/profile" />,
-        },
-        {
-          path: "profile",
-          element: <Profile />,
+          element: <Navigate to="/apply-for-leave" />,
         },
         {
           path: "employees",

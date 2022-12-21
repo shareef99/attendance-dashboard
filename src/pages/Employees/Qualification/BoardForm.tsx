@@ -4,34 +4,73 @@ import NumberInput from "../../../components/Molecules/NumberInput";
 import TextInput from "../../../components/Molecules/TextInput";
 import { useForm, zodResolver } from "@mantine/form";
 import { axiosClient } from "../../../api";
+import {
+  errNotification,
+  loadingNotification,
+  successNotification,
+} from "../../../helpers/notification";
+
+const boardSchema = z.object({
+  board: z.string(),
+  yearOfPassing: z.number(),
+  percentage: z.number(),
+});
+
+type BoardType = z.infer<typeof boardSchema>;
 
 type Props = {
   boardName: "ssc" | "inter";
   id: string;
+  formValues: BoardType;
+  isEdit: boolean;
+  onToggleIsEdit: () => void;
 };
 
-const boardSchema = z.object({
-  board: z.string(),
-  yop: z.number(),
-  percentage: z.number(),
-});
-
-type boardType = z.infer<typeof boardSchema>;
-
-export default function BoardForm({ boardName, id }: Props) {
-  const { onSubmit, getInputProps } = useForm<boardType>({
+export default function BoardForm({
+  boardName,
+  id,
+  formValues,
+  isEdit,
+  onToggleIsEdit,
+}: Props) {
+  // Form
+  const { onSubmit, getInputProps } = useForm<BoardType>({
+    initialValues: { ...formValues },
     validateInputOnBlur: true,
     validate: zodResolver(boardSchema),
   });
 
-  const submitHandler = (data: boardType) => {
-    if (boardName === "ssc") {
-      axiosClient.put("/employees/qualification", data, {
-        params: { id: id, type: boardName },
+  // Functions
+  const submitHandler = async (data: BoardType) => {
+    try {
+      loadingNotification({
+        id: "qualification",
+        title: "Qualification",
+        message: "Updating Qualification Details",
       });
-    } else {
-      axiosClient.put("/employees/qualification", data, {
-        params: { id: id, type: boardName },
+      onToggleIsEdit();
+      if (boardName === "ssc") {
+        await axiosClient.put("/employees/qualification", data, {
+          params: { id: id, type: boardName },
+        });
+      } else {
+        await axiosClient.put("/employees/qualification", data, {
+          params: { id: id, type: boardName },
+        });
+      }
+      successNotification({
+        id: "qualification",
+        title: "Qualification",
+        message: "Qualification Details Updated",
+      });
+    } catch (err: any) {
+      errNotification({
+        id: "qualification",
+        title: "Qualification",
+        message:
+          err?.response?.data?.message ||
+          err.message ||
+          "Failed to Update Qualification",
       });
     }
   };
@@ -44,6 +83,7 @@ export default function BoardForm({ boardName, id }: Props) {
           placeholder="Enter Board Name"
           className="grow"
           withAsterisk
+          disabled={!isEdit}
           {...getInputProps("board")}
         />
         <NumberInput
@@ -52,7 +92,8 @@ export default function BoardForm({ boardName, id }: Props) {
           className="grow"
           hideControls
           withAsterisk
-          {...getInputProps("yop")}
+          disabled={!isEdit}
+          {...getInputProps("yearOfPassing")}
         />
         <NumberInput
           label="Percentage"
@@ -61,10 +102,11 @@ export default function BoardForm({ boardName, id }: Props) {
           min={1}
           className="grow"
           withAsterisk
+          disabled={!isEdit}
           {...getInputProps("percentage")}
         />
       </div>
-      <Button type="submit" className="btn mt-2">
+      <Button type="submit" className="btn mt-2" disabled={!isEdit}>
         SAVE
       </Button>
     </form>
