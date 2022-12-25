@@ -1,6 +1,5 @@
 import {
   ArrowLeftOnRectangleIcon,
-  BellAlertIcon,
   CalendarDaysIcon,
   ChevronRightIcon,
   IdentificationIcon,
@@ -13,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink as RRDNavLink, useNavigate } from "react-router-dom";
 import { clearAuth } from "../../helpers/auth";
 import { signout } from "../../store/employeeSlice";
+import logo from "../../assets/Images/logo.webp";
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -20,11 +20,15 @@ export default function Sidebar() {
   const employee = useSelector(({ employee }: any) => employee);
 
   return (
-    <Navbar
-      width={{ base: 250 }}
-      withBorder={false}
-      className="bg-p-white-green"
-    >
+    <Navbar width={{ base: 250 }} withBorder={false}>
+      <div className="flex h-20 items-center bg-p-blue px-4">
+        <img
+          src={logo}
+          className="mr-2 h-12 w-12 bg-opacity-40 rounded-full bg-p-gray"
+          alt="ISL Logo"
+        />
+        <p className="text-xl text-p-gray">Leave Dashboard</p>
+      </div>
       <ScrollArea className="h-full bg-p-blue-light">
         <Navbar.Section grow className="bg-p-blue-light px-4 py-8">
           <RRDNavLink to="/apply-for-leave">
@@ -87,21 +91,6 @@ export default function Sidebar() {
                   label: "text-lg font-medium",
                 }}
                 icon={<CalendarDaysIcon className="w-5 h-5" />}
-                rightSection={<ChevronRightIcon className="h-4 w-4" />}
-              />
-            )}
-          </RRDNavLink>
-          <RRDNavLink to="/notifications">
-            {({ isActive }) => (
-              <NavLink
-                label="Notifications"
-                className={`text-p-blue-dark hover:bg-p-gray hover:text-p-blue ${
-                  isActive && "bg-p-gray text-p-blue"
-                }`}
-                classNames={{
-                  label: "text-lg font-medium",
-                }}
-                icon={<BellAlertIcon className="w-5 h-5" />}
                 rightSection={<ChevronRightIcon className="h-4 w-4" />}
               />
             )}
