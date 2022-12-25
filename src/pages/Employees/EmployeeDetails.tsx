@@ -8,7 +8,11 @@ import { EmployeeDetailsType } from "./employee";
 import Qualification from "./Qualification/Qualification";
 import PersonalDetails from "./PersonalDetails";
 
-export default function EmployeeDetails() {
+type Props = {
+  isProfile: boolean;
+};
+
+export default function EmployeeDetails({ isProfile }: Props) {
   const params = useParams();
   const id = params.empId;
 
@@ -59,8 +63,6 @@ export default function EmployeeDetails() {
         <Tabs.Tab value="personal">Personal Details</Tabs.Tab>
         <Tabs.Tab value="qualification">Qualification Details</Tabs.Tab>
         <Tabs.Tab value="experience">Experience Details</Tabs.Tab>
-        <Tabs.Tab value="family">Family Details</Tabs.Tab>
-        <Tabs.Tab value="other">Other Details</Tabs.Tab>
       </Tabs.List>
 
       {isLoading || !employee ? (
@@ -93,17 +95,17 @@ export default function EmployeeDetails() {
                 RTGSNo: employee.personalDetails.RTGSNo,
                 emp_type: employee.emp_type,
               }}
+              isProfile={isProfile}
             />
           </Tabs.Panel>
           <Tabs.Panel value="qualification">
             <Qualification
               qualification={employee.qualificationDetails}
               id={employee.emp_id}
+              isProfile={isProfile}
             />
           </Tabs.Panel>
           <Tabs.Panel value="experience">experience</Tabs.Panel>
-          <Tabs.Panel value="family">Family Details</Tabs.Panel>
-          <Tabs.Panel value="other">Other</Tabs.Panel>
         </>
       )}
     </Tabs>

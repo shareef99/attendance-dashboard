@@ -1,3 +1,5 @@
+import EmployeeDetails from "../Employees/EmployeeDetails";
+
 export default function Profile() {
-  return <>Profile</>;
+  return <EmployeeDetails isProfile={true} />;
 }

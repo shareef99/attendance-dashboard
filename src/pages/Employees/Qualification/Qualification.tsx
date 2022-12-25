@@ -7,9 +7,10 @@ import BoardForm from "./BoardForm";
 type Props = {
   qualification: QualificationDetailsType;
   id: string;
+  isProfile: boolean;
 };
 
-export default function Qualification({ qualification, id }: Props) {
+export default function Qualification({ qualification, id, isProfile }: Props) {
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
   return (
@@ -17,9 +18,11 @@ export default function Qualification({ qualification, id }: Props) {
       <div>
         <div className="flex justify-between">
           <h2 className="text-xl">SSC Details</h2>
-          <Button className="btn" onClick={() => setIsEdit(!isEdit)}>
-            {isEdit ? "Done" : "Edit"}
-          </Button>
+          {!isProfile && (
+            <Button className="btn" onClick={() => setIsEdit(!isEdit)}>
+              {isEdit ? "Done" : "Edit"}
+            </Button>
+          )}
         </div>
         <BoardForm
           boardName="ssc"
@@ -27,6 +30,7 @@ export default function Qualification({ qualification, id }: Props) {
           formValues={qualification.ssc}
           isEdit={isEdit}
           onToggleIsEdit={() => setIsEdit(!isEdit)}
+          isProfile={isProfile}
         />
       </div>
       <div>
@@ -37,6 +41,7 @@ export default function Qualification({ qualification, id }: Props) {
           formValues={qualification.inter}
           isEdit={isEdit}
           onToggleIsEdit={() => setIsEdit(!isEdit)}
+          isProfile={isProfile}
         />
       </div>
       {/* <div>

@@ -84,12 +84,13 @@ export default function AddEmployee() {
         title: "Employee",
         message: "Employee added successfully",
       });
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
       errNotification({
         id: "employee",
         title: "Employee",
-        message: "Failed to add employee",
+        message:
+          "Failed to add employee, please check phone number and email is unique",
       });
     }
   };

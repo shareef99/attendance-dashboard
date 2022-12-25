@@ -24,6 +24,7 @@ type Props = {
   formValues: BoardType;
   isEdit: boolean;
   onToggleIsEdit: () => void;
+  isProfile: boolean;
 };
 
 export default function BoardForm({
@@ -32,6 +33,7 @@ export default function BoardForm({
   formValues,
   isEdit,
   onToggleIsEdit,
+  isProfile,
 }: Props) {
   // Form
   const { onSubmit, getInputProps } = useForm<BoardType>({
@@ -106,9 +108,11 @@ export default function BoardForm({
           {...getInputProps("percentage")}
         />
       </div>
-      <Button type="submit" className="btn mt-2" disabled={!isEdit}>
-        SAVE
-      </Button>
+      {!isProfile && (
+        <Button type="submit" className="btn mt-2" disabled={!isEdit}>
+          SAVE
+        </Button>
+      )}
     </form>
   );
 }

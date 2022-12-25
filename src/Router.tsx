@@ -14,6 +14,7 @@ import EmployeeDetails from "./pages/Employees/EmployeeDetails";
 import Employees from "./pages/Employees/Employees";
 import AddLeave from "./pages/Leaves/AddLeave";
 import Leaves from "./pages/Leaves/Leaves";
+import Profile from "./pages/Profile/Profile";
 
 export default function Router() {
   const routes = createBrowserRouter([
@@ -42,7 +43,7 @@ export default function Router() {
             },
             {
               path: ":empId",
-              element: <EmployeeDetails />,
+              element: <EmployeeDetails isProfile={false} />,
             },
           ],
         },
@@ -79,7 +80,7 @@ export default function Router() {
         },
         {
           path: "profile",
-          element: <EmployeeDetails />,
+          element: <Profile />,
         },
       ],
     },

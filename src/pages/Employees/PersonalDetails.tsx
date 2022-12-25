@@ -14,6 +14,7 @@ import {
   successNotification,
 } from "../../helpers/notification";
 import { updatePersonalDetailsApi } from "../../api/employees";
+import dayjs from "dayjs";
 
 const personalSchema = z.object({
   emp_id: z.string(),
@@ -41,9 +42,10 @@ type PersonalType = z.infer<typeof personalSchema>;
 
 type Props = {
   personalDetails: PersonalType & { emp_type: string };
+  isProfile: boolean;
 };
 
-export default function PersonalDetails({ personalDetails }: Props) {
+export default function PersonalDetails({ personalDetails, isProfile }: Props) {
   const [isEdit, setIsEdit] = useState(false);
 
   // Query
@@ -57,6 +59,16 @@ export default function PersonalDetails({ personalDetails }: Props) {
   const { getInputProps, onSubmit } = useForm<PersonalType>({
     initialValues: {
       ...personalDetails,
+      // In order to pass date values directly into mantine form, we need to convert string to date
+      // @ts-ignore
+      joining_date: dayjs(personalDetails.joining_date).toDate(),
+      // Initially Personal details will be undefined, if undefined value is not checked dayjs will give mantine the current date value
+      // @ts-ignore
+      dob: personalDetails.dob ? dayjs(personalDetails.dob).toDate() : "",
+      // @ts-ignore
+      marriedDate: personalDetails.marriedDate
+        ? dayjs(personalDetails.marriedDate).toDate()
+        : "",
     },
   });
 
@@ -96,22 +108,27 @@ export default function PersonalDetails({ personalDetails }: Props) {
   return (
     <section className="my-4">
       <div className="flex justify-end">
-        <Button className="btn" onClick={() => setIsEdit(!isEdit)}>
-          {isEdit ? "Done" : "Edit"}
-        </Button>
+        {!isProfile && (
+          <Button className="btn" onClick={() => setIsEdit(!isEdit)}>
+            {isEdit ? "Done" : "Edit"}
+          </Button>
+        )}
       </div>
+      {/* @ts-ignore */}
       <form onSubmit={onSubmit((data) => submitHandler(data))}>
         <div className="grid grid-cols-3 gap-4">
           <TextInput
             label="Bio Metric"
             placeholder="Enter Bio Metric"
             disabled={!isEdit}
+            styleDisable={true}
             {...getInputProps("emp_id")}
           />
           <TextInput
             label="Name"
             placeholder="Enter Name"
             disabled={!isEdit}
+            styleDisable={true}
             {...getInputProps("name")}
           />
           <Select
@@ -123,13 +140,15 @@ export default function PersonalDetails({ personalDetails }: Props) {
             label="Gender"
             placeholder="Select Gender"
             disabled={!isEdit}
+            styleDisable={true}
             {...getInputProps("gender")}
           />
           <DatePicker
             label="Date Of Birth"
             placeholder="Select DOB"
             disabled={!isEdit}
-            classNames={{ rightSection: "rightIcon" }}
+            classNames={{ rightSection: "rightIcon", disabled: "!text-black" }}
+            styleDisable={true}
             {...getInputProps("dob")}
           />
           <Select
@@ -140,13 +159,15 @@ export default function PersonalDetails({ personalDetails }: Props) {
             label="Married"
             placeholder="Select Married Status"
             disabled={!isEdit}
+            styleDisable={true}
             {...getInputProps("married")}
           />
           <DatePicker
             label="Date Of Married"
             placeholder="Select date of married"
             disabled={!isEdit}
-            classNames={{ rightSection: "rightIcon" }}
+            classNames={{ rightSection: "rightIcon", disabled: "!text-black" }}
+            styleDisable={true}
             {...getInputProps("marriedDate")}
           />
           <Select
@@ -161,6 +182,7 @@ export default function PersonalDetails({ personalDetails }: Props) {
             label="Designation"
             placeholder="Select Designation"
             disabled={!isEdit}
+            styleDisable={true}
             {...getInputProps("designation")}
           />
           <NumberInput
@@ -168,19 +190,21 @@ export default function PersonalDetails({ personalDetails }: Props) {
             placeholder="Enter Mobile Number"
             hideControls
             disabled={!isEdit}
+            styleDisable={true}
             {...getInputProps("mobile_no")}
           />
           <TextInput
             label="Email"
             placeholder="Enter Email"
             disabled={!isEdit}
+            styleDisable={true}
             {...getInputProps("email")}
           />
           <DatePicker
             label="Date Of Joining"
             placeholder="Select Date of joining"
             disabled={!isEdit}
-            classNames={{ rightSection: "rightIcon" }}
+            classNames={{ rightSection: "rightIcon", disabled: "!text-black" }}
             {...getInputProps("joining_date")}
           />
           <NumberInput
@@ -188,30 +212,35 @@ export default function PersonalDetails({ personalDetails }: Props) {
             placeholder="Enter Bank Account Number"
             hideControls
             disabled={!isEdit}
+            styleDisable={true}
             {...getInputProps("bankAccountNo")}
           />
           <TextInput
             label="Bank Name"
             placeholder="Enter Bank Name"
             disabled={!isEdit}
+            styleDisable={true}
             {...getInputProps("bankName")}
           />
           <TextInput
             label="IFSC Code"
             placeholder="Enter Bio Metric"
             disabled={!isEdit}
+            styleDisable={true}
             {...getInputProps("IFSCCode")}
           />
           <TextInput
             label="Pancard Number"
             placeholder="Enter Pancard Number"
             disabled={!isEdit}
+            styleDisable={true}
             {...getInputProps("pancardNo")}
           />
           <TextInput
             label="PF Number"
             placeholder="Enter PF Number"
             disabled={!isEdit}
+            styleDisable={true}
             {...getInputProps("pfNo")}
           />
           <NumberInput
@@ -219,19 +248,23 @@ export default function PersonalDetails({ personalDetails }: Props) {
             placeholder="Enter Aadhar Number"
             disabled={!isEdit}
             hideControls
+            styleDisable={true}
             {...getInputProps("aadharNo")}
           />
           <TextInput
             label="RTGS No"
             placeholder="Enter RTGS No"
             disabled={!isEdit}
+            styleDisable={true}
             {...getInputProps("RTGSNo")}
           />
           <div></div>
           <div></div>
-          <Button className="btn" type="submit" disabled={!isEdit}>
-            Save
-          </Button>
+          {!isProfile && (
+            <Button className="btn" type="submit" disabled={!isEdit}>
+              Save
+            </Button>
+          )}
         </div>
       </form>
     </section>
