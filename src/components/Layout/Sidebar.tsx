@@ -9,7 +9,7 @@ import {
   UserMinusIcon,
 } from "@heroicons/react/24/outline";
 import { Navbar, NavLink, ScrollArea } from "@mantine/core";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink as RRDNavLink, useNavigate } from "react-router-dom";
 import { clearAuth } from "../../helpers/auth";
 import { signout } from "../../store/employeeSlice";
@@ -17,6 +17,7 @@ import { signout } from "../../store/employeeSlice";
 export default function Sidebar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const employee = useSelector(({ employee }: any) => employee);
 
   return (
     <Navbar
@@ -41,36 +42,40 @@ export default function Sidebar() {
               />
             )}
           </RRDNavLink>
-          <RRDNavLink to="/employees">
-            {({ isActive }) => (
-              <NavLink
-                label="Employees"
-                className={`text-p-blue-dark hover:bg-p-gray hover:text-p-blue ${
-                  isActive && "bg-p-green text-black"
-                }`}
-                classNames={{
-                  label: "text-lg font-medium",
-                }}
-                icon={<IdentificationIcon className="w-5 h-5" />}
-                rightSection={<ChevronRightIcon className="h-4 w-4" />}
-              />
-            )}
-          </RRDNavLink>
-          <RRDNavLink to="/employee-leaves">
-            {({ isActive }) => (
-              <NavLink
-                label="Employee Leaves"
-                className={`text-p-blue-dark  hover:bg-p-gray hover:text-p-blue ${
-                  isActive && "bg-p-gray text-p-blue"
-                }`}
-                classNames={{
-                  label: "text-lg font-medium",
-                }}
-                icon={<UserGroupIcon className="w-5 h-5" />}
-                rightSection={<ChevronRightIcon className="h-4 w-4" />}
-              />
-            )}
-          </RRDNavLink>
+          {employee.role <= 2 && (
+            <>
+              <RRDNavLink to="/employees">
+                {({ isActive }) => (
+                  <NavLink
+                    label="Employees"
+                    className={`text-p-blue-dark hover:bg-p-gray hover:text-p-blue ${
+                      isActive && "bg-p-green text-black"
+                    }`}
+                    classNames={{
+                      label: "text-lg font-medium",
+                    }}
+                    icon={<IdentificationIcon className="w-5 h-5" />}
+                    rightSection={<ChevronRightIcon className="h-4 w-4" />}
+                  />
+                )}
+              </RRDNavLink>
+              <RRDNavLink to="/employee-leaves">
+                {({ isActive }) => (
+                  <NavLink
+                    label="Employee Leaves"
+                    className={`text-p-blue-dark  hover:bg-p-gray hover:text-p-blue ${
+                      isActive && "bg-p-gray text-p-blue"
+                    }`}
+                    classNames={{
+                      label: "text-lg font-medium",
+                    }}
+                    icon={<UserGroupIcon className="w-5 h-5" />}
+                    rightSection={<ChevronRightIcon className="h-4 w-4" />}
+                  />
+                )}
+              </RRDNavLink>
+            </>
+          )}
           <RRDNavLink to="/leaves">
             {({ isActive }) => (
               <NavLink

@@ -23,7 +23,10 @@ export default function Employees() {
     data: employees,
   } = useQuery<Array<EmployeesType>, any>({
     queryKey: ["employees"],
-    queryFn: () => getEmployeesByDepartmentApi(user.department),
+    queryFn: () =>
+      user.role === 1
+        ? getEmployeesApi()
+        : getEmployeesByDepartmentApi(user.department),
   });
 
   if (isLoading) {
