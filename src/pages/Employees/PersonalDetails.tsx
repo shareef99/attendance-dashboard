@@ -36,6 +36,7 @@ const personalSchema = z.object({
   pfNo: z.string().optional(),
   aadharNo: z.number().optional(),
   RTGSNo: z.string().optional(),
+  salary: z.number().optional(),
 });
 
 type PersonalType = z.infer<typeof personalSchema>;
@@ -258,7 +259,14 @@ export default function PersonalDetails({ personalDetails, isProfile }: Props) {
             styleDisable={true}
             {...getInputProps("RTGSNo")}
           />
-          <div></div>
+          <NumberInput
+            label="Salary"
+            placeholder="Enter Salary"
+            disabled={!isEdit}
+            hideControls
+            styleDisable={true}
+            {...getInputProps("salary")}
+          />
           <div></div>
           {!isProfile && (
             <Button className="btn" type="submit" disabled={!isEdit}>

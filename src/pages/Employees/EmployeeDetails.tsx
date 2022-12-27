@@ -94,6 +94,7 @@ export default function EmployeeDetails({ isProfile }: Props) {
                 pfNo: employee.personalDetails.pfNo,
                 RTGSNo: employee.personalDetails.RTGSNo,
                 emp_type: employee.emp_type,
+                salary: employee.salary,
               }}
               isProfile={isProfile}
             />

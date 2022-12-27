@@ -1,15 +1,16 @@
 import { NumberInput as MNumberInput } from "@mantine/core";
 import type { NumberInputProps } from "@mantine/core";
 
-export default function NumberInput(
-  props: NumberInputProps & { styleDisable?: boolean }
-) {
+export default function NumberInput({
+  styleDisable,
+  ...props
+}: NumberInputProps & { styleDisable?: boolean }) {
   return (
     <MNumberInput
       classNames={{
         ...props.classNames,
         rightSection: `rightIcon ${props.classNames?.rightSection}`,
-        disabled: `${props.styleDisable && "!text-black"} ${
+        disabled: `${styleDisable && "!text-black"} ${
           props.classNames?.disabled
         }`,
       }}

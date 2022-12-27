@@ -22,12 +22,12 @@ export type EmployeeDetailsType = {
   designation: string;
   role: number;
   leaves: Array<{
-    name: string;
-    shortName: string;
-    from: string;
-    to: string;
-    leaveDuration: string;
+    no_of_leaves_taken: number;
+    shortname: string;
   }>;
+  salary: number;
+  final_salary: number;
+  is_salary_updated: boolean;
   personalDetails: PersonalDetailsType;
   qualificationDetails: QualificationDetailsType;
   experience: Array<ExperienceType>;

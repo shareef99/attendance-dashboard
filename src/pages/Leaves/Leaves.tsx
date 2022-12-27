@@ -1,5 +1,6 @@
 import { Button, ScrollArea, Table } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getLeavesAPi } from "../../api/leaves";
 import Loader from "../../components/Molecules/Loader";
@@ -13,6 +14,9 @@ export type leaveType = {
 };
 
 export default function Leaves() {
+  const employee = useSelector(({ employee }: any) => employee);
+
+  // Query
   const {
     isLoading,
     isError,
@@ -35,9 +39,11 @@ export default function Leaves() {
     <section className="mt-8">
       <div className="flex justify-between items-center">
         <h2 className="text-xl">Leave Types</h2>
-        <Button className="btn">
-          <Link to="/leaves/add">Add Leave Type</Link>{" "}
-        </Button>
+        {employee.role !== 3 && (
+          <Button className="btn">
+            <Link to="/leaves/add">Add Leave Type</Link>{" "}
+          </Button>
+        )}
       </div>
       {leaves && leaves.length > 0 ? (
         <ScrollArea>
